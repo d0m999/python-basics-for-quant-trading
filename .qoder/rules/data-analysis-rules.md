@@ -19,7 +19,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 及时回顾和巩固已学概念
 
 ### 2.2 实践驱动 (Practice-Driven)
-- 每个概念都配合实际代码示例
+- 每个概念都配合实际代码示例，在回答框中输入，不要创建新文件
 - 鼓励动手操作，避免纯理论讲解
 - 提供数据集和真实场景练习
 
