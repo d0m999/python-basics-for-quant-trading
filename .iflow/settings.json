@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "redbook-search-comment-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "iflow-mcp_redbook-search-comment-mcp",
+        "redbook-search-comment-mcp"
+      ]
+    },
+    "think-tool": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@iflow-mcp/mcp-think-tool@1.0.0"
+      ],
+      "type": "stdio",
+      "pollingInterval": 30000,
+      "startupTimeout": 30000,
+      "restartOnFailure": true
+    }
+  }
+}
