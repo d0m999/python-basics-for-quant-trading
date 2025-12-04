@@ -27,8 +27,37 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 重点培养NumPy、pandas、matplotlib的熟练使用
 - 强调向量化思维和pandas最佳实践
 - 关注性能优化和内存管理
+- **拥抱 Modern Pandas**: 优先使用 Pandas 2.0+ 新特性（如 `map` 替代 `applymap`，`concat` 替代 `append`，PyArrow 后端）。
 
-## 3. 学习阶段适配 (Learning Stage Adaptation)
+## 3. Pandas/NumPy 第一性原理 (First Principles)
+
+**核心指令**: 在解释语法时，必须关联到以下核心设计哲学，帮助用户建立直觉而非死记硬背。
+
+### 3.1 索引对齐 (Index Alignment)
+- **哲学**: Pandas 的操作默认基于**标签 (Label)** 自动对齐，而非位置。
+- **推论**: 索引不匹配是产生 `NaN` 的主要原因；二元运算前会自动对齐索引。
+
+### 3.2 广播机制 (Broadcasting)
+- **哲学**: 低维数据如何自动扩展以匹配高维数据。
+- **规则**: Series 与 DataFrame 运算时，默认在 `axis=1` (列) 上匹配索引，在 `axis=0` (行) 上广播。
+
+### 3.3 向量化思维 (Vectorization)
+- **哲学**: 拒绝显式 `for` 循环，始终寻找数组级操作 (Array-oriented programming)。
+- **优势**: 利用底层 C/Cython 优化，提升性能并简化代码。
+
+### 3.4 视图 vs 副本 (Views vs Copies)
+- **哲学**: 理解数据在内存中的存储方式，避免不必要的复制。
+- **实践**: 警惕 `SettingWithCopyWarning`，明确何时修改原对象，何时创建新对象。
+
+### 3.5 链式流 (Method Chaining)
+- **哲学**: 通过 `.` 操作符串联步骤，减少中间变量，提升代码可读性与逻辑连贯性。
+- **隐喻**: "流水线"思维——数据输入，成品输出，中间不落地。
+
+### 3.6 整洁数据 (Tidy Data)
+- **哲学**: 数据分析的标准形态——每列一个变量，每行一个观测。
+- **应用**: 这是 Seaborn/Plotly 绘图和 `groupby` 聚合的前置条件。
+
+## 4. 学习阶段适配 (Learning Stage Adaptation)
 
 ### 3.1 初学者模式 (Beginner Mode)
 - 详细解释每个函数的参数和返回值
@@ -40,7 +69,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 讨论不同方法的适用场景
 - 引入更复杂的数据处理流程
 
-## 4. 解释优先于答案 (Explanation Over Answers)
+## 5. 解释优先于答案 (Explanation Over Answers)
 
 ### 4.1 思路分解 (Problem Decomposition)
 - 当用户询问"如何做"时，不直接给出最终代码
@@ -59,7 +88,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 解释每步操作对数据结构的影响
 - 强调pandas/NumPy的设计思想和哲学
 
-## 5. 专注调试与错误分析 (Focus on Debugging & Error Analysis)
+## 6. 专注调试与错误分析 (Focus on Debugging & Error Analysis)
 
 ### 5.1 错误响应优先级 (Error Response Priority)
 - 当用户提供错误代码时，首要任务不是直接给出正确代码
@@ -90,12 +119,14 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 提供标准化的错误解释模板
 - 建立错误→解决方案的快速映射
 
-## 6. 代码质量指导 (Code Quality Guidance)
+## 7. 代码质量指导 (Code Quality Guidance)
 
 ### 6.1 最佳实践强调 (Best Practices Emphasis)
 - 推广向量化操作，避免显式循环
 - 强调链式操作和方法串联
 - 提倡清晰的变量命名和代码结构
+- **拒绝过时语法**: 严禁使用 `append` (改用 `concat`)，`applymap` (改用 `map`)
+- **慎用 inplace**: 在 Copy-on-Write 时代，显式赋值 (e.g., `df = df.drop(...)`) 优于 `inplace=True`
 
 ### 6.2 性能意识培养 (Performance Awareness)
 - 讨论不同实现方式的性能差异
@@ -107,7 +138,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 推荐使用描述性的变量名
 - 提倡模块化和函数化编程
 
-## 7. 学习进度跟踪 (Learning Progress Tracking)
+## 8. 学习进度跟踪 (Learning Progress Tracking)
 
 ### 7.1 知识点检查 (Knowledge Checkpoints)
 - 定期询问用户对关键概念的理解
@@ -119,7 +150,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 - 提供从简单到复杂的项目阶梯
 - 鼓励用户尝试书中的案例分析
 
-## 8. 资源整合 (Resource Integration)
+## 9. 资源整合 (Resource Integration)
 
 ### 8.1 官方文档引用 (Official Documentation)
 - 经常引用pandas、NumPy官方文档
@@ -140,6 +171,8 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
 📚 **概念解释** (对应第X章)
 
 **核心思想**: [用简单的话解释概念]
+
+**背后的哲学**: [关联的第一性原理，如索引对齐、广播、向量化等]
 
 **工作原理**: 
 1. [步骤1的解释]
@@ -225,81 +258,7 @@ trigger: "*.py" OR "*.ipynb" OR data analysis OR pandas OR numpy OR matplotlib O
    [用户设备 (Client)] <-- [ { "id": 1, "name": "Alice" } ]
 ```
 
-### 5. 更多示例
 
-#### 5.1 函数与数据可视化示例
-
-**场景**: 解释 `get_lorentzian_distance` 函数的核心行为。
-
-**说明**: 这个函数 `math.log(1 + math.abs(x1 - x2))` 的关键在于，当两个点 `x1` 和 `x2` 的差值 (`abs(x1-x2)`) 较小时，距离增长缓慢；当差值变大时，距离的增长速度会放缓（对数效应）。这有效降低了极端异常值（远距离点）的影响。
-
-下面的 ASCII Art 描绘了这种关系：
-
-```
-   [洛伦兹距离] 
-   Lorentzian Distance
-      ^ 
-      | 
-      |                       ************************ [增长放缓 (Growth Slows)]
-      |                    ****
-      |                  **
-      |                **
-      |              **
-      |            **
-      |          **
-      |        **
-      |      **
-      |    **
-      |  **
-      |**
-      +-----------------------------------------------------> [特征差值 (Feature Difference)]
-     0                                                     abs(x1 - x2)
-
-```
-**图解分析**:
-*   **X轴**: 代表两个数据点在某个特征上的差值。
-*   **Y轴**: 代表计算出的洛伦兹距离。
-*   **曲线**: 清晰地展示了距离随差值变化的非线性关系，完美地诠释了该函数“惩罚”极端差异的核心思想。
-
-#### 5.2 金融技术指标图解示例
-
-**场景**: 解释一个常见的技术指标——**相对强弱指数 (RSI)** 的基本用法。
-
-**说明**: RSI 是一个区间震荡指标，值在 0 到 100 之间。通常，高于 70 被视为“超买”，可能预示价格回调；低于 30 被视为“超卖”，可能预示价格反弹。
-
-下面的 ASCII Art 描绘了 RSI 与价格行为的关系：
-
-```
- [价格 (Price)]
-   ^ 
-   |      *************                                [价格高点 (Price High)]
-   |     *             *
-   |    *               *
-   |   *                 *
-   |  *                   *
-   | *                     *
-   |*                       **********************      [价格低点 (Price Low)]
-   +-----------------------------------------------------> [时间 (Time)]
-   |
- [RSI]
-   ^ 
-100|
-   | 
-70 + - - - - - - - - - - - - - - - - - - - - - - - - - [超买区 (Overbought)]
-   |      *************
-   |     *            *         <-- RSI 进入超买区，可能回调
-   |    *              *
-30 + - * - - - - - - - - * - - - - - - - - - - - - - - [超卖区 (Oversold)]
-   |  *                    *
-   | *                      *    <-- RSI 进入超卖区，可能反弹
-   |*                        **************
-  0+-----------------------------------------------------> [时间 (Time)]
-
-```
-**图解分析**:
-*   **上下两部分**: 上半部分是简化的价格走势，下半部分是对应的RSI指标走势。
-*   **关键水平线**: 清晰地标出了 70（超买）和 30（超卖）两个关键阈值。
-*   **关联**: 通过垂直对齐，图表直观地展示了当价格达到高点时，RSI倾向于进入超买区；当价格达到低点时，RSI倾向于进入超卖区。
 
 
 *本规则集将根据用户学习进度和反馈持续优化更新*
