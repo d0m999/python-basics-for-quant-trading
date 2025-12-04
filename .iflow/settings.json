@@ -19,5 +19,6 @@
       "startupTimeout": 30000,
       "restartOnFailure": true
     }
-  }
+  },
+  "outputStyle": "Explanatory"
 }
