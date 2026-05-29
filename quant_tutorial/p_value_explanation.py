@@ -1,3 +1,9 @@
+"""
+P 值计算与可视化 — 独立精简版
+================================
+本脚本是 t-test-tutorial.ipynb 中 P 值相关部分的精简独立版本。
+可以脱离 notebook 单独运行，适合快速查阅 P 值的计算方式和图形化理解。
+"""
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt

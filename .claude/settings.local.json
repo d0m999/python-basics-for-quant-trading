@@ -1,3 +1,9 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(python3:*)"
+    ]
+  },
   "outputStyle": "default"
 }
